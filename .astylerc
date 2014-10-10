@@ -1,0 +1,8 @@
+style=allman
+add-brackets
+align-reference=type
+align-pointer=type
+unpad-paren
+pad-header
+pad-oper
+min-conditional-indent=0

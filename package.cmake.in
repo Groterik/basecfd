@@ -1,0 +1,57 @@
+# - Try to find BaseCFD
+#  Once done this will define
+#
+#  BASECFD_FOUND - system has BaseCFD
+#  BASECFD_INCLUDE_DIR - the BaseCFD include directory
+#  BASECFD_LIBRARIES - Link these to use BaseCFD
+#
+# Copyright (c) 2014 Klimov Maksim, <maxy.klimov@gmail.com>
+#
+# Redistribution and use of this file is allowed according to the terms of the MIT license.
+
+@PACKAGE_INIT@
+
+if(BASECFD_INCLUDE_DIR AND BASECFD_LIBRARIES)
+  # in cache already
+  set(BASECFD_FOUND TRUE)
+else(BASECFD_INCLUDE_DIR AND BASECFD_LIBRARIES)
+
+    set(INCLUDE_SEARCH_PATHS "@PACKAGE_INCLUDE_DIR@" $ENV{PROGRAMFILES}/BaseCFD ${GNUWIN32_DIR} $ENV{BASECFD_INSTALL_DIR})
+    set(INCLUDE_SEARCH_SUFFIXES include)
+    set(LIBRARIES_SEARCH_PATHS "@PACKAGE_LIBRARY_DIR@" "@PACKAGE_BINARY_DIR@" $ENV{PROGRAMFILES}/BaseCFD ${GNUWIN32_DIR} $ENV{BASECFD_INSTALL_DIR})
+    set(LIBRARIES_SEARCH_SUFFIXES lib)
+
+  if(NOT BASECFD_INCLUDE_DIR)
+    find_path(BASECFD_INCLUDE_DIR basecfd/grid.hpp
+              HINTS ${INCLUDE_SEARCH_PATHS}
+              PATH_SUFFIXES ${INCLUDE_SEARCH_SUFFIXES}
+              DOC "Path to BaseCFD include directory")
+  endif(NOT BASECFD_INCLUDE_DIR)
+  
+  if(NOT BASECFD_LIBRARIES)
+    find_library(BASECFD_LIBRARIES 
+                 NAMES basecfd 
+                 HINTS ${LIBRARIES_SEARCH_PATHS}
+                 PATH_SUFFIXES ${LIBRARIES_SEARCH_SUFFIXES}
+                 DOC "Path to BaseCFD library")
+  endif(NOT BASECFD_LIBRARIES)
+
+  if(BASECFD_INCLUDE_DIR AND BASECFD_LIBRARIES)
+    set(BASECFD_FOUND TRUE)
+  endif(BASECFD_INCLUDE_DIR AND BASECFD_LIBRARIES)
+
+  if (BASECFD_FOUND)
+    if (NOT BASECFD_FIND_QUIETLY)
+      message(STATUS "Found BaseCFD library: ${BASECFD_LIBRARIES}")
+      message(STATUS "Found BaseCFD include: ${BASECFD_INCLUDE_DIR}")
+    endif (NOT BASECFD_FIND_QUIETLY)
+  else (BASECFD_FOUND)
+    if (BASECFD_FIND_REQUIRED)
+      message(FATAL_ERROR "Could NOT find BaseCFD (try to use BASECFD_INSTALL_DIR environment var)")
+    else(BASECFD_FIND_REQUIRED)
+      message(WARNING "Could NOT find BaseCFD (try to use BASECFD_INSTALL_DIR environment var)ev")
+    endif (BASECFD_FIND_REQUIRED)
+
+  endif(BASECFD_FOUND)
+
+endif (BASECFD_INCLUDE_DIR AND BASECFD_LIBRARIES)
