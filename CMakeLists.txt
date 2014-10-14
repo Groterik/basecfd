@@ -23,15 +23,23 @@ find_package(Metis REQUIRED PATHS ${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(${METIS_INCLUDE_DIR})
 
 # Project files
-set(SOURCES src/unstructured_grid.cpp)
+set(SOURCES
+        src/plugin.cpp
+        src/unstructured_grid.cpp
+    )
 
 set(PUBLIC_HEADERS
         include/basecfd/cell.hpp
         include/basecfd/definitions.hpp
         include/basecfd/element.hpp
         include/basecfd/grid.hpp
+        include/basecfd/plugin.hpp
         include/basecfd/unstructured_grid.hpp
         include/basecfd/vector.hpp
+    )
+
+set(PRIVATE_HEADERS
+        thirdparty/dynfload/dynfload.hpp
     )
 
 set(OTHER_FILES
@@ -40,6 +48,7 @@ set(OTHER_FILES
 
 # Build settings
 include_directories(include)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 add_library(${PROJECT} ${LIB_TYPE} ${SOURCES} ${PUBLIC_HEADERS} ${PRIVATE_HEADERS} ${OTHER_FILES})
 set_property(TARGET ${PROJECT} PROPERTY PUBLIC_HEADER ${PUBLIC_HEADERS})
