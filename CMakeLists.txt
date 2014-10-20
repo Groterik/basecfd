@@ -11,11 +11,17 @@ string(TOUPPER ${PROJECT} UPROJECT)
 
 # Options
 option(${UPROJECT}_AS_SHARED "Build ${PROJECT} as shared library" ON)
+option(${UPROJECT}_WITH_UNIT_TESTS "Build ${PROJECT} with unit tests" ON)
+option(${UPROJECT}_WITH_PLUGINS "Build ${PROJECT} with plugins" ON)
 
 if(${UPROJECT}_AS_SHARED)
   set(LIB_TYPE SHARED)
 else()
   set(LIB_TYPE STATIC)
+endif()
+
+if(${UPROJECT}_WITH_UNIT_TESTS)
+  add_definitions(-DBASECFD_WITH_UNIT_TESTS)
 endif()
 
 # Dependencies
@@ -24,6 +30,7 @@ include_directories(${METIS_INCLUDE_DIR})
 
 # Project files
 set(SOURCES
+        src/format.cpp
         src/plugin.cpp
         src/unstructured_grid.cpp
     )
@@ -32,6 +39,7 @@ set(PUBLIC_HEADERS
         include/basecfd/cell.hpp
         include/basecfd/definitions.hpp
         include/basecfd/element.hpp
+        include/basecfd/format.hpp
         include/basecfd/grid.hpp
         include/basecfd/plugin.hpp
         include/basecfd/unstructured_grid.hpp
@@ -78,5 +86,9 @@ configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/package.cmake.in ${PAC
 
 install(FILES ${PACKAGE_OUTPUT}
         DESTINATION ${PACKAGE_INSTALL_DIR})
+
+if(${UPROJECT}_WITH_PLUGINS)
+  add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/plugins)
+endif()
 
 

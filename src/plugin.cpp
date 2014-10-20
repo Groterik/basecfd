@@ -12,7 +12,7 @@ using namespace basecfd::plugin;
 typedef Plugin* (*Creator)();
 typedef void (*Deleter)(Plugin*);
 
-void PluginManager::Load(const std::string &path)
+void PluginManager::Load(const std::string& path)
 {
     std::auto_ptr<DynFLoad::DynamicModule> module(new DynFLoad::DynamicModule(path.c_str()));
     Plugins::iterator it = plugins.find(path);
@@ -35,7 +35,7 @@ void PluginManager::Load(const std::string &path)
     }
 }
 
-PluginManager &PluginManager::instance()
+PluginManager& PluginManager::instance()
 {
     static PluginManager inst;
     return inst;
@@ -55,7 +55,7 @@ PluginManager::~PluginManager()
     }
 }
 
-const char *basecfd::plugin::Plugin::description() const
+const char* basecfd::plugin::Plugin::description() const
 {
     return "No description provided";
 }
