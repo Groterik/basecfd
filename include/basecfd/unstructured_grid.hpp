@@ -40,39 +40,6 @@ public:
         return csr.nc();
     }
 
-private:
-    class Csr
-    {
-        /// Format part: eptr, eind, mp, f, r, types
-        std::vector<idx_t> eptr;          //(     nc+1    ,   1   )
-        std::vector<idx_t> eind;          //( eptr.back() ,   1   ) or (  nc  , elem.points() )
-        std::vector<Vector> mp;           //(      np     ,  dim  )
-        std::vector<Vector> oldmp;        //(      np     ,  dim  )
-        std::vector<int> pctx;            //(      np     ,  dim  )
-        std::vector<idx_t> xadj;          //(     nc+1    ,   1   )
-        std::vector<idx_t> adjncy;        //( xadj.back() ,   1   ) or (  nc  ,  elem.neigs() )
-        std::vector<double> f;            //(      nc     , ncomp )
-        std::vector<int> r;               //(      nc     ,   1   )
-        std::vector<ElementType> types;   //(      nc     ,   1   )
-
-        idx_t nc() const
-        {
-            assert(!eptr.empty());
-            return eptr.size() - 1;
-        }
-
-        idx_t np() const
-        {
-            assert(!eptr.empty());
-            return eptr.back();
-        }
-
-        void CheckConsistency() const;
-        void CheckMinimalConsistency() const;
-        void LinkNeigs() const;
-        friend class UnstructuredGrid;
-    };
-
     Vector p(idx_t pos, int n) const
     {
         assert(n < np(pos));
@@ -115,6 +82,39 @@ private:
     {
         return nComponents;
     }
+
+private:
+    class Csr
+    {
+        /// Format part: eptr, eind, mp, f, r, types
+        std::vector<idx_t> eptr;          //(     nc+1    ,   1   )
+        std::vector<idx_t> eind;          //( eptr.back() ,   1   ) or (  nc  , elem.points() )
+        std::vector<Vector> mp;           //(      np     ,  dim  )
+        std::vector<Vector> oldmp;        //(      np     ,  dim  )
+        std::vector<int> pctx;            //(      np     ,  dim  )
+        std::vector<idx_t> xadj;          //(     nc+1    ,   1   )
+        std::vector<idx_t> adjncy;        //( xadj.back() ,   1   ) or (  nc  ,  elem.neigs() )
+        std::vector<double> f;            //(      nc     , ncomp )
+        std::vector<int> r;               //(      nc     ,   1   )
+        std::vector<ElementType> types;   //(      nc     ,   1   )
+
+        idx_t nc() const
+        {
+            assert(!eptr.empty());
+            return eptr.size() - 1;
+        }
+
+        idx_t np() const
+        {
+            assert(!eptr.empty());
+            return eptr.back();
+        }
+
+        void checkConsistency() const;
+        void checkMinimalConsistency() const;
+        void linkNeigs() const;
+        friend class UnstructuredGrid;
+    };
 
     Csr csr;
     dim_t nComponents;

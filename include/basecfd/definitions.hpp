@@ -68,6 +68,8 @@ typedef unsigned __int64    uint64_t;
 #include <stdint.h>
 #endif
 
+#define BASECFD_UNUSED_PARAM(p) (void)(p);
+
 #include <limits>
 
 namespace basecfd

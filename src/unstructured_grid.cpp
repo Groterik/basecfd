@@ -11,7 +11,23 @@ UnstructuredGrid::UnstructuredGrid(const MinimalCsr& minCsr)
     csr.r = minCsr.r;
     csr.types = minCsr.types;
 
-    csr.CheckMinimalConsistency();
-    csr.LinkNeigs();
-    csr.CheckConsistency();
+    csr.checkMinimalConsistency();
+    csr.linkNeigs();
+    csr.checkConsistency();
+}
+
+
+void UnstructuredGrid::Csr::checkConsistency() const
+{
+    // TODO
+}
+
+void UnstructuredGrid::Csr::checkMinimalConsistency() const
+{
+    // TODO
+}
+
+void UnstructuredGrid::Csr::linkNeigs() const
+{
+    // TODO
 }

@@ -17,7 +17,7 @@ else()
   set(LIB_TYPE STATIC)
 endif()
 
-if(${UPROJECT}_WITH_UNIT_TESTS)
+if(BASECFD_WITH_UNIT_TESTS)
   add_definitions(-DBASECFD_WITH_UNIT_TESTS)
 endif()
 
@@ -37,7 +37,7 @@ set(PRIVATE_HEADERS
     )
 
 set(OTHER_FILES
-   )
+    )
 
 # Build settings
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
@@ -59,4 +59,12 @@ install(TARGETS ${PROJECT}
         LIBRARY DESTINATION ${INSTALL_LIBRARY_DIR}
         ARCHIVE DESTINATION ${INSTALL_LIBRARY_DIR}
         PUBLIC_HEADER DESTINATION ${INSTALL_INCLUDE_DIR}/${PROJECT})
+
+# Tests
+
+if(BASECFD_WITH_UNIT_TESTS)
+  add_executable(${PROJECT}_units ${SOURCES} ${PUBLIC_HEADERS} ${PRIVATE_HEADERS} ${OTHER_FILES})
+  target_link_libraries(${PROJECT}_units basecfd)
+  add_test(${PROJECT}-units ${PROJECT}_units)
+endif()
 

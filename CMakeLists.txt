@@ -30,7 +30,9 @@ include_directories(${METIS_INCLUDE_DIR})
 
 # Project files
 set(SOURCES
+        src/basecfd.cpp
         src/format.cpp
+        src/grid.cpp
         src/plugin.cpp
         src/unstructured_grid.cpp
     )
@@ -62,6 +64,9 @@ add_library(${PROJECT} ${LIB_TYPE} ${SOURCES} ${PUBLIC_HEADERS} ${PRIVATE_HEADER
 set_property(TARGET ${PROJECT} PROPERTY PUBLIC_HEADER ${PUBLIC_HEADERS})
 set_property(TARGET ${PROJECT} PROPERTY VERSION ${${PROJECT}_VERSION})
 
+# Dependencies
+target_link_libraries(${PROJECT} dl)
+
 
 # Installation
 set(INSTALL_INCLUDE_DIR include)
@@ -91,4 +96,8 @@ if(${UPROJECT}_WITH_PLUGINS)
   add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/plugins)
 endif()
 
-
+if(${UPROJECT}_WITH_UNIT_TESTS)
+  add_executable(${PROJECT}_units test/units/tests_runner.cpp)
+  target_link_libraries(${PROJECT}_units ${PROJECT})
+  add_test(unit-tests ${PROJECT}_units)
+endif()
