@@ -38,6 +38,7 @@ set(SOURCES
     )
 
 set(PUBLIC_HEADERS
+        include/basecfd/adjacency_list.hpp
         include/basecfd/cell.hpp
         include/basecfd/definitions.hpp
         include/basecfd/element.hpp
