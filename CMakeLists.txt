@@ -45,6 +45,7 @@ set(PUBLIC_HEADERS
         include/basecfd/format.hpp
         include/basecfd/grid.hpp
         include/basecfd/plugin.hpp
+        include/basecfd/range.hpp
         include/basecfd/unstructured_grid.hpp
         include/basecfd/vector.hpp
     )

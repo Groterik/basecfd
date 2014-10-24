@@ -23,6 +23,11 @@ struct MinimalCsr
     std::vector<ElementType> types;
 };
 
+namespace internal
+{
+class CsrHolder;
+} // namespace internal
+
 class UnstructuredGrid
 {
 public:
@@ -30,93 +35,28 @@ public:
 
     explicit UnstructuredGrid(const MinimalCsr& minCsr);
 
-    idx_t np() const
-    {
-        return csr.np();
-    }
+    idx_t np() const;
 
-    idx_t nc() const
-    {
-        return csr.nc();
-    }
+    idx_t nc() const;
 
-    Vector p(idx_t pos, int n) const
-    {
-        assert(n < np(pos));
-        idx_t ip = csr.eptr[pos];
-        return csr.mp[ip + n];
-    }
+    Vector p(idx_t pos, int n) const;
 
-    idx_t np(idx_t pos) const
-    {
-        assert(pos + 1 < csr.eptr.size());
-        return csr.eptr[pos + 1] - csr.eptr[pos];
-    }
+    idx_t np(idx_t pos) const;
 
-    double f(idx_t pos, dim_t d) const
-    {
-        assert(pos * nComponents + d < csr.f.size());
-        return csr.f[pos * nComponents + d];
-    }
+    double f(idx_t pos, dim_t d) const;
 
-    int r(idx_t pos) const
-    {
-        return csr.r[pos];
-    }
+    int r(idx_t pos) const;
 
-    dim_t nn(idx_t pos) const
-    {
-        assert(pos + 1 < csr.xadj.size());
-        assert(csr.xadj[pos + 1] > csr.xadj[pos]);
-        return static_cast<dim_t>(csr.xadj[pos + 1] - csr.xadj[pos]);
-    }
+    dim_t nn(idx_t pos) const;
 
-    idx_t neig(idx_t pos, dim_t n) const
-    {
-        assert(n < nn(pos));
-        idx_t in = csr.xadj[pos];
-        return csr.adjncy[in + n];
-    }
+    idx_t neig(idx_t pos, dim_t n) const;
 
-    dim_t nf() const
-    {
-        return nComponents;
-    }
+    dim_t nf() const;
+
+    ~UnstructuredGrid();
 
 private:
-    class Csr
-    {
-        /// Format part: eptr, eind, mp, f, r, types
-        std::vector<idx_t> eptr;          //(     nc+1    ,   1   )
-        std::vector<idx_t> eind;          //( eptr.back() ,   1   ) or (  nc  , elem.points() )
-        std::vector<Vector> mp;           //(      np     ,  dim  )
-        std::vector<Vector> oldmp;        //(      np     ,  dim  )
-        std::vector<int> pctx;            //(      np     ,  dim  )
-        std::vector<idx_t> xadj;          //(     nc+1    ,   1   )
-        std::vector<idx_t> adjncy;        //( xadj.back() ,   1   ) or (  nc  ,  elem.neigs() )
-        std::vector<double> f;            //(      nc     , ncomp )
-        std::vector<int> r;               //(      nc     ,   1   )
-        std::vector<ElementType> types;   //(      nc     ,   1   )
-
-        idx_t nc() const
-        {
-            assert(!eptr.empty());
-            return eptr.size() - 1;
-        }
-
-        idx_t np() const
-        {
-            assert(!eptr.empty());
-            return eptr.back();
-        }
-
-        void checkConsistency() const;
-        void checkMinimalConsistency() const;
-        void linkNeigs() const;
-        friend class UnstructuredGrid;
-    };
-
-    Csr csr;
+    internal::CsrHolder* csr;
     dim_t nComponents;
 };
 
