@@ -210,9 +210,8 @@ void VtkLegacyFormater::extractMinimalCsr(MinimalCsr& csr, std::istream& is, int
         throw std::domain_error("Error: 2X number of cells must be less than (CELLS size)");
     }
 
-    std::vector<idx_t> eptr(nc + 1, BAD_IDX);
-    eptr[0] = 0;
-    std::vector<idx_t> eind(nCellsRawData - nc, BAD_IDX);
+    Csr<> cell2points;
+    std::vector<idx_t> currList;
     for (size_t c = 0; c < nc; ++c)
     {
         idx_t ncp;
@@ -222,21 +221,19 @@ void VtkLegacyFormater::extractMinimalCsr(MinimalCsr& csr, std::istream& is, int
         {
             throw std::domain_error("Error: cell must have at least 1 point");
         }
-        eptr[c + 1] = eptr[c] + ncp;
-        if (eptr[c + 1] > static_cast<idx_t>(eind.size()))
-        {
-            throw std::domain_error("Error: bad cell size (size is exhausted)");
-        }
+        currList.resize(ncp);
         for (idx_t i = 0; i < ncp; ++i)
         {
-            is >> eind[eptr[c] + i];
+            is >> currList[i];
             nCellsRawData--;
             if (is.eof() || is.fail())
             {
                 throw std::domain_error("Error: unexpected end of file (or error) while reading CELLS");
             }
         }
+        cell2points.add(currList);
     }
+
     if (nCellsRawData != 0)
     {
         throw std::domain_error("Error: bad size or cells structure");
@@ -347,8 +344,7 @@ void VtkLegacyFormater::extractMinimalCsr(MinimalCsr& csr, std::istream& is, int
         }
         f_in.erase(it);
     }
-    csr.eind = eind;
-    csr.eptr = eptr;
+    csr.cell2points = cell2points;
     if (squash(f_in, csr.f) == 0 && !f_in.empty())
     {
         throw std::runtime_error("Failed to load F vector");
@@ -382,14 +378,12 @@ LOOKUP_TABLE default\n\
     MinimalCsr csr;
     std::istringstream is(data);
     REQUIRE_NOTHROW(testExtractMinimalCsr(csr, is, 0));
-    REQUIRE(csr.eptr.size() == 2);
-    REQUIRE(csr.eptr.front() == 0);
-    REQUIRE(csr.eptr.back() == 4);
-    REQUIRE(csr.eind.size() == 4);
-    REQUIRE(csr.eind[0] == 0);
-    REQUIRE(csr.eind[1] == 1);
-    REQUIRE(csr.eind[2] == 3);
-    REQUIRE(csr.eind[3] == 2);
+    REQUIRE(csr.cell2points.size() == 1);
+    REQUIRE(csr.cell2points.neigs() == 4);
+    REQUIRE(csr.cell2points.neig(0, 0) == 0);
+    REQUIRE(csr.cell2points.neig(0, 1) == 1);
+    REQUIRE(csr.cell2points.neig(0, 2) == 3);
+    REQUIRE(csr.cell2points.neig(0, 3) == 2);
 }
 
 #endif // BASECFD_WITH_UNIT_TESTS

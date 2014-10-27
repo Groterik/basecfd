@@ -10,11 +10,11 @@ namespace internal
 class CsrHolder
 {
     /// Format part: eptr, eind, mp, f, r, types
-    Csr<idx_t> cell2points;
+    Csr<> cell2points;
     std::vector<Vector> mp;           //(      np     ,  dim  )
     std::vector<Vector> oldmp;        //(      np     ,  dim  )
     std::vector<int> pctx;            //(      np     ,  dim  )
-    Csr<idx_t> cell2cell;
+    Csr<> cell2cell;
     std::vector<double> f;            //(      nc     , ncomp )
     std::vector<int> r;               //(      nc     ,   1   )
     std::vector<ElementType> types;   //(      nc     ,   1   )
@@ -105,7 +105,6 @@ UnstructuredGrid::~UnstructuredGrid()
 
 void internal::CsrHolder::makeFromMinimal(const MinimalCsr& minCsr)
 {
-    // TODO
 }
 
 void internal::CsrHolder::checkConsistency() const

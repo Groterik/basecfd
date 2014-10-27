@@ -2,6 +2,7 @@
 #define BASECFD_UNSTRUCTURED_GRID_GUARD_H
 
 #include <basecfd/definitions.hpp>
+#include <basecfd/adjacency_list.hpp>
 #include <basecfd/vector.hpp>
 #include <basecfd/element.hpp>
 #include <basecfd/cell.hpp>
@@ -14,8 +15,7 @@ namespace basecfd
 
 struct MinimalCsr
 {
-    std::vector<idx_t> eptr;
-    std::vector<idx_t> eind;
+    Csr<> cell2points;
     std::vector<Vector> mp;
     std::vector<int> pctx;
     std::vector<double> f;
