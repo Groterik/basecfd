@@ -25,11 +25,10 @@ if(${UPROJECT}_WITH_UNIT_TESTS)
 endif()
 
 # Dependencies
-find_package(Metis REQUIRED PATHS ${CMAKE_CURRENT_SOURCE_DIR})
-include_directories(${METIS_INCLUDE_DIR})
 
 # Project files
 set(SOURCES
+        src/adjoiner.cpp
         src/basecfd.cpp
         src/format.cpp
         src/grid.cpp
@@ -39,6 +38,7 @@ set(SOURCES
 
 set(PUBLIC_HEADERS
         include/basecfd/adjacency_list.hpp
+        include/basecfd/adjoiner.hpp
         include/basecfd/cell.hpp
         include/basecfd/definitions.hpp
         include/basecfd/element.hpp

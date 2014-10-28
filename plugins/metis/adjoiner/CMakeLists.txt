@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 
 #Project name
-set(PROJECT basecfd_plugin_vtk_legacy)
+set(PROJECT basecfd_plugin_metis_adjoiner)
 
 enable_testing()
 
@@ -22,11 +22,11 @@ if(BASECFD_WITH_UNIT_TESTS)
 endif()
 
 # Dependencies
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../include/)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../../include/)
 
 # Project files
 set(SOURCES
-        vtk_legacy.cpp
+        metis_adjoiner.cpp
     )
 
 set(PUBLIC_HEADERS
@@ -45,7 +45,7 @@ add_library(${PROJECT} SHARED ${SOURCES} ${PUBLIC_HEADERS} ${PRIVATE_HEADERS} ${
 set_property(TARGET ${PROJECT} PROPERTY PUBLIC_HEADER ${PUBLIC_HEADERS})
 set_property(TARGET ${PROJECT} PROPERTY VERSION ${${PROJECT}_VERSION})
 
-target_link_libraries(${PROJECT} basecfd)
+target_link_libraries(${PROJECT} basecfd ${METIS_LIBRARY})
 
 
 # Installation
@@ -63,7 +63,7 @@ install(TARGETS ${PROJECT}
 
 if(BASECFD_WITH_UNIT_TESTS)
   add_executable(${PROJECT}_units ${SOURCES} ${PUBLIC_HEADERS} ${PRIVATE_HEADERS} ${OTHER_FILES})
-  target_link_libraries(${PROJECT}_units basecfd)
+  target_link_libraries(${PROJECT}_units ${METIS_LIBRARY})
   add_test(${PROJECT}-units ${PROJECT}_units)
 endif()
 

@@ -17,7 +17,7 @@ public:
     virtual idx_t np() const = 0;
     virtual Vector p(idx_t pos, int n) const = 0;
     virtual idx_t np(idx_t pos) const = 0;
-    virtual double f(idx_t pos, dim_t d) const = 0;
+    virtual double fc(idx_t pos, dim_t d) const = 0;
     virtual int r(idx_t pos) const = 0;
     virtual dim_t nn(idx_t pos) const = 0;
     virtual idx_t neig(idx_t pos, dim_t n) const = 0;
@@ -47,7 +47,6 @@ public:
     {
         return g->np();
     }
-private:
     virtual Vector p(idx_t pos, int n) const
     {
         return g->p(pos, n);
@@ -56,9 +55,9 @@ private:
     {
         return g->np(pos);
     }
-    virtual double f(idx_t pos, dim_t d) const
+    virtual double fc(idx_t pos, dim_t d) const
     {
-        return g->f(pos, d);
+        return g->fc(pos, d);
     }
     virtual int r(idx_t pos) const
     {
@@ -76,6 +75,7 @@ private:
     {
         return g->nf();
     }
+private:
     T* g;
 };
 

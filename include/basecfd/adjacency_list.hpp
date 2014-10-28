@@ -11,7 +11,7 @@
 namespace basecfd
 {
 
-template <class T1 = idx_t, class T2 = size_t, class VertexContext = void, class EdgeContext = void>
+template <class T1, class T2, class VertexContext = void, class EdgeContext = void>
 class Csr;
 
 
@@ -28,10 +28,10 @@ class Csr;
 template <class T1, class T2>
 class Csr<T1, T2, void, void>
 {
-    typedef std::vector<T2> PtrVec;
 public:
     typedef T2 PtrType;
     typedef T1 IndType;
+    typedef std::vector<T2> PtrVec;
     typedef std::vector<IndType> IndVec;
 
     typedef typename IndVec::const_iterator const_neig_iterator;
@@ -41,6 +41,12 @@ public:
     Csr()
     {
         col_ptr.push_back(0);
+    }
+
+    Csr(const PtrVec& eptr, const IndVec& eind)
+        : col_ptr(eptr), row_ind(eind)
+    {
+        // some checks
     }
 
     IndType add()
@@ -139,10 +145,23 @@ public:
         row_ind.swap(a.row_ind);
     }
 
+    const PtrVec& eptr() const
+    {
+        return col_ptr;
+    }
+
+    const IndVec& eind() const
+    {
+        return row_ind;
+    }
+
 private:
     std::vector<PtrType> col_ptr;
     std::vector<IndType> row_ind;
 };
+
+
+typedef Csr<idx_t, idx_t> Adjacency;
 
 } // namespace basecfd
 

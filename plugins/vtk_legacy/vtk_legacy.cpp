@@ -210,7 +210,7 @@ void VtkLegacyFormater::extractMinimalCsr(MinimalCsr& csr, std::istream& is, int
         throw std::domain_error("Error: 2X number of cells must be less than (CELLS size)");
     }
 
-    Csr<> cell2points;
+    Adjacency cell2points;
     std::vector<idx_t> currList;
     for (size_t c = 0; c < nc; ++c)
     {
@@ -345,7 +345,7 @@ void VtkLegacyFormater::extractMinimalCsr(MinimalCsr& csr, std::istream& is, int
         f_in.erase(it);
     }
     csr.cell2points = cell2points;
-    if (squash(f_in, csr.f) == 0 && !f_in.empty())
+    if (squash(f_in, csr.fc) == 0 && !f_in.empty())
     {
         throw std::runtime_error("Failed to load F vector");
     }

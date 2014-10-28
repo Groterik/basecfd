@@ -15,10 +15,10 @@ namespace basecfd
 
 struct MinimalCsr
 {
-    Csr<> cell2points;
+    Adjacency cell2points;
     std::vector<Vector> mp;
-    std::vector<int> pctx;
-    std::vector<double> f;
+    std::vector<double> fp;
+    std::vector<double> fc;
     std::vector<int> r;
     std::vector<ElementType> types;
 };
@@ -43,7 +43,7 @@ public:
 
     idx_t np(idx_t pos) const;
 
-    double f(idx_t pos, dim_t d) const;
+    double fc(idx_t pos, dim_t d) const;
 
     int r(idx_t pos) const;
 
