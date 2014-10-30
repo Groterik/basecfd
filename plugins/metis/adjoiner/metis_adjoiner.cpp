@@ -26,10 +26,10 @@ void MetisAdjoiner::join(const basecfd::Adjacency& adj, size_t p, size_t common,
 
     idx_t** adjcny = 0;
     idx_t** xadj = 0;
-    int err = METIS_MeshToDual(&nc, &nc, eptr.data(), eind.data(), &ncommon, &flags, xadj, adjcny);
+    int err = METIS_MeshToDual(&nc, &np, eptr.data(), eind.data(), &ncommon, &flags, xadj, adjcny);
     if (err != METIS_OK)
     {
-        throw std::runtime_error("failed to complete METIS_MeshToDual");
+        throw std::runtime_error("failed to complete METIS_MeshToDual with code = " + std::to_string(err));
     }
     basecfd::Adjacency::PtrVec outptr(*xadj, *xadj + eptr.size());
     basecfd::Adjacency::PtrVec outind(*adjcny, *adjcny + outptr.back());
@@ -39,3 +39,14 @@ void MetisAdjoiner::join(const basecfd::Adjacency& adj, size_t p, size_t common,
 
     out = basecfd::Adjacency(outptr, outind);
 }
+
+
+#ifdef BASECFD_WITH_UNIT_TESTS
+TEST_CASE("Metis adjoiner", "[metis_adjoiner]")
+{
+    MetisAdjoiner adjoiner;
+    basecfd::Adjacency cell2points;
+    cell2points.add({0, 1, 2, 3});
+}
+
+#endif // BASECFD_WITH_UNIT_TESTS

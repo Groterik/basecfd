@@ -7,6 +7,8 @@
 #include <vector>
 #include <stdexcept>
 #include <cassert>
+#include <type_traits>
+#include <initializer_list>
 
 namespace basecfd
 {
@@ -55,11 +57,24 @@ public:
         return static_cast<IndType>(col_ptr.size() - 2);
     }
 
-    IndType add(const NeigsRange& neigs)
+    template <class TInputIterator>
+    IndType add(TInputIterator first_neig, TInputIterator last_neig)
     {
-        col_ptr.push_back(col_ptr.back() + neigs.size());
-        row_ind.insert(row_ind.end(), neigs.begin(), neigs.end());
+        col_ptr.push_back(col_ptr.back() + std::distance(first_neig, last_neig));
+        row_ind.insert(row_ind.end(), first_neig, last_neig);
         return static_cast<IndType>(col_ptr.size() - 2);
+    }
+
+    template <class TRange>
+    IndType add(const TRange& neigs)
+    {
+        return add(neigs.begin(), neigs.end());
+    }
+
+    template <class T>
+    IndType add(std::initializer_list<T>& neigs)
+    {
+        return add(neigs.begin(), neigs.end());
     }
 
     size_t size() const

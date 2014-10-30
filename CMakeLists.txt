@@ -14,6 +14,15 @@ option(${UPROJECT}_AS_SHARED "Build ${PROJECT} as shared library" ON)
 option(${UPROJECT}_WITH_UNIT_TESTS "Build ${PROJECT} with unit tests" ON)
 option(${UPROJECT}_WITH_PLUGINS "Build ${PROJECT} with plugins" ON)
 
+set(CXX11_FLAG "-std=c++11")
+if(CMAKE_COMPILER_IS_GNUCC)
+    if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 4.7)
+      set(CXX11_FLAG "-std=c++0x")
+    endif()
+endif()
+
+list(APPEND CMAKE_CXX_FLAGS ${CXX11_FLAG})
+
 if(${UPROJECT}_AS_SHARED)
   set(LIB_TYPE SHARED)
 else()
@@ -32,6 +41,7 @@ set(SOURCES
         src/basecfd.cpp
         src/format.cpp
         src/grid.cpp
+        src/partitioner.cpp
         src/plugin.cpp
         src/unstructured_grid.cpp
     )
@@ -44,6 +54,7 @@ set(PUBLIC_HEADERS
         include/basecfd/element.hpp
         include/basecfd/format.hpp
         include/basecfd/grid.hpp
+        include/basecfd/partitioner.hpp
         include/basecfd/plugin.hpp
         include/basecfd/range.hpp
         include/basecfd/unstructured_grid.hpp

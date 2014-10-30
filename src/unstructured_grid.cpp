@@ -1,5 +1,6 @@
 #include <basecfd/unstructured_grid.hpp>
 #include <basecfd/adjacency_list.hpp>
+#include <basecfd/adjoiner.hpp>
 
 using namespace basecfd;
 
@@ -32,7 +33,7 @@ class CsrHolder
     void makeFromMinimal(const MinimalCsr& minCsr);
     void checkConsistency() const;
     void checkMinimalConsistency() const;
-    void linkNeigs() const;
+    void linkNeigs();
     friend class basecfd::UnstructuredGrid;
 };
 } // namespace internal
@@ -139,7 +140,7 @@ void internal::CsrHolder::checkMinimalConsistency() const
     }
 }
 
-void internal::CsrHolder::linkNeigs() const
+void internal::CsrHolder::linkNeigs()
 {
-    // TODO
+    AdjoinerFactory::instance().adjoiner().join(cell2points, mp.size(), 2, cell2cell);
 }

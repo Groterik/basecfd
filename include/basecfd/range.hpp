@@ -58,7 +58,7 @@ inline Range<T> make_range(T begin, T end)
 template <class T>
 inline Range<T> make_range(const T& c)
 {
-    return Range<T>(c.begin(), c.end());
+    return make_range(c.begin(), c.end());
 }
 
 } // namespace basecfd
