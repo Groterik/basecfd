@@ -379,7 +379,7 @@ LOOKUP_TABLE default\n\
     std::istringstream is(data);
     REQUIRE_NOTHROW(testExtractMinimalCsr(csr, is, 0));
     REQUIRE(csr.cell2points.size() == 1);
-    REQUIRE(csr.cell2points.neigs() == 4);
+    REQUIRE(csr.cell2points.links() == 4);
     REQUIRE(csr.cell2points.neig(0, 0) == 0);
     REQUIRE(csr.cell2points.neig(0, 1) == 1);
     REQUIRE(csr.cell2points.neig(0, 2) == 3);

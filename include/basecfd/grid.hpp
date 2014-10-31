@@ -23,14 +23,20 @@ public:
     virtual idx_t neig(idx_t pos, dim_t n) const = 0;
     virtual dim_t nf() const = 0;
 
+    void init();
+
 private:
 
     virtual void checkConsistency();
+
     virtual void scatter();
     virtual void replenishBoundary();
+    virtual void supressUseless();
     virtual void reorderNeighbors();
     virtual void reorderPoints();
     virtual void sortCells();
+    virtual void paint();
+    virtual void synchronizeOrder();
 };
 
 template <class T>

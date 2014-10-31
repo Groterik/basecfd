@@ -27,7 +27,7 @@ class CsrHolder
 
     idx_t np() const
     {
-        return cell2points.neigs();
+        return mp.size();
     }
 
     void makeFromMinimal(const MinimalCsr& minCsr);
@@ -116,7 +116,11 @@ void internal::CsrHolder::makeFromMinimal(const MinimalCsr& minCsr)
 
 void internal::CsrHolder::checkConsistency() const
 {
-    // TODO
+    checkMinimalConsistency();
+    if (cell2cell.size() != cell2points.size())
+    {
+        throw std::runtime_error("invalid adjancency size");
+    }
 }
 
 void internal::CsrHolder::checkMinimalConsistency() const

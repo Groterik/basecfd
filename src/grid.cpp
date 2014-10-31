@@ -2,6 +2,19 @@
 
 using namespace basecfd;
 
+void Grid::init()
+{
+    checkConsistency();
+    supressUseless();
+    replenishBoundary();
+    paint();
+    scatter();
+    reorderPoints();
+    reorderNeighbors();
+    sortCells();
+    synchronizeOrder();
+}
+
 void Grid::checkConsistency()
 {
     // TODO
@@ -17,6 +30,11 @@ void Grid::replenishBoundary()
     // TODO
 }
 
+void Grid::supressUseless()
+{
+    // TODO
+}
+
 void Grid::reorderNeighbors()
 {
     // TODO
@@ -28,6 +46,16 @@ void Grid::reorderPoints()
 }
 
 void Grid::sortCells()
+{
+    // TODO
+}
+
+void Grid::paint()
+{
+    // TODO
+}
+
+void Grid::synchronizeOrder()
 {
     // TODO
 }

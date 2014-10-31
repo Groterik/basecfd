@@ -82,7 +82,7 @@ public:
         return col_ptr.size() - 1;
     }
 
-    PtrType neigs() const
+    PtrType links() const
     {
         return col_ptr.back();
     }

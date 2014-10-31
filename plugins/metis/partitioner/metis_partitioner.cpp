@@ -5,7 +5,6 @@
 #ifdef BASECFD_WITH_UNIT_TESTS
 #define CATCH_CONFIG_MAIN
 #include <thirdparty/catch/catch.hpp>
-#include <sstream>
 #endif // BASECFD_WITH_UNIT_TESTS
 
 class MetisPartitioner : public basecfd::Partitioner
