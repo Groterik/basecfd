@@ -65,14 +65,14 @@ public:
         return static_cast<IndType>(col_ptr.size() - 2);
     }
 
-    template <class TRange>
-    IndType add(const TRange& neigs)
+    template <class T>
+    IndType add(std::initializer_list<T> neigs)
     {
         return add(neigs.begin(), neigs.end());
     }
 
-    template <class T>
-    IndType add(std::initializer_list<T>& neigs)
+    template <class TRange>
+    IndType add(const TRange& neigs)
     {
         return add(neigs.begin(), neigs.end());
     }
