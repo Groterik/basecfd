@@ -4,6 +4,9 @@
 #include <basecfd/definitions.hpp>
 #include <basecfd/cell.hpp>
 #include <basecfd/vector.hpp>
+#include <basecfd/grid_info.hpp>
+
+#include <memory>
 
 namespace basecfd
 {
@@ -25,10 +28,11 @@ public:
 
     void init();
 
+    virtual GridInfo calculateInfo();
+
 private:
 
     virtual void checkConsistency();
-
     virtual void scatter();
     virtual void replenishBoundary();
     virtual void supressUseless();

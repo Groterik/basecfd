@@ -2,46 +2,41 @@
 #define BASECFD_RANGE_GUARD_H
 
 #include <cstddef>
+#include <iterator>
 
 namespace basecfd
 {
 
-
-template <class T, class D = void>
-class Range;
-
 template <class T>
-class Range<T, void>
+class Range
 {
 public:
-    typedef T Type;
-    Range(T begin, T end) : b(begin), e(end) {}
-    T begin() const
-    {
-        return b;
-    }
+    typedef T IteratorType;
+    typedef typename std::iterator_traits<IteratorType>::difference_type DifferenceType;
+
+    Range(IteratorType begin, IteratorType end) : b(begin), e(end) {}
 
     template <class Y>
     Range(const Y& a) : b(a.begin()), e(a.end()) {}
 
-    T end() const
+    IteratorType begin() const
+    {
+        return b;
+    }
+
+    IteratorType end() const
     {
         return e;
     }
 
-    void begin(T value)
+    bool empty() const
     {
-        b = value;
+        return b == e;
     }
 
-    void end(T value)
+    DifferenceType size() const
     {
-        e = value;
-    }
-
-    size_t size() const
-    {
-        return e - b;
+        return std::distance(b, e);
     }
 
 private:

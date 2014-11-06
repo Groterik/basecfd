@@ -13,11 +13,17 @@ void Grid::init()
     reorderNeighbors();
     sortCells();
     synchronizeOrder();
+    checkConsistency();
 }
 
 void Grid::checkConsistency()
 {
     // TODO
+}
+
+GridInfo Grid::calculateInfo()
+{
+
 }
 
 void Grid::scatter()

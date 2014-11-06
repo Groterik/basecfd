@@ -53,8 +53,10 @@ set(PUBLIC_HEADERS
         include/basecfd/cell.hpp
         include/basecfd/definitions.hpp
         include/basecfd/element.hpp
+        include/basecfd/filtered_iterator.hpp
         include/basecfd/format.hpp
         include/basecfd/grid.hpp
+        include/basecfd/grid_info.hpp
         include/basecfd/partitioner.hpp
         include/basecfd/plugin.hpp
         include/basecfd/range.hpp
