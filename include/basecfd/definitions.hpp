@@ -69,6 +69,7 @@ typedef unsigned __int64    uint64_t;
 #endif
 
 #define BASECFD_UNUSED_PARAM(p) (void)(p);
+#define BASECFD_OVERRIDE override
 
 #include <limits>
 

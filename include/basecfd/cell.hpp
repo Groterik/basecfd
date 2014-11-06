@@ -14,42 +14,65 @@ public:
     typedef G GridType;
     Vector p(int n) const
     {
-        return grid.g(pos, n);
+        return m_grid->g(pos, n);
     }
 
     dim_t np() const
     {
-        return grid.np(pos);
+        return m_grid->np(pos);
     }
 
     double f(dim_t c) const
     {
-        return grid.f(pos, c);
+        return m_grid->f(pos, c);
     }
 
     dim_t nf() const
     {
-        return grid.nf();
+        return m_grid->nf();
     }
 
     int r() const
     {
-        return grid.r(pos);
+        return m_grid->r(pos);
     }
 
     dim_t nn() const
     {
-        return grid.nn(pos);
+        return m_grid->nn(pos);
     }
 
     Cell neig(dim_t n) const
     {
-        return Cell(grid, grid.neig(pos, n));
+        return Cell(m_grid, m_grid->neig(pos, n));
     }
+
+    Cell() : m_grid(0), pos(0) {}
+    Cell(GridType& grid, idx_t pos) : m_grid(&grid), pos(pos) {}
+
+    idx_t index() const
+    {
+        return pos;
+    }
+
+    const GridType& grid() const
+    {
+        return *m_grid;
+    }
+
+    GridType& grid()
+    {
+        return *m_grid;
+    }
+
+    Cell next() const
+    {
+        return Cell(*m_grid, pos + 1);
+    }
+
 private:
-    Cell(G& grid, idx_t pos) : grid(grid), pos(pos) {}
+    GridType* m_grid;
     idx_t pos;
-    G& grid;
 };
 
 } // namespace basecfd

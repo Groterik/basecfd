@@ -51,6 +51,7 @@ set(PUBLIC_HEADERS
         include/basecfd/adjoiner.hpp
         include/basecfd/algorithm.hpp
         include/basecfd/cell.hpp
+        include/basecfd/cell_iterator.hpp
         include/basecfd/definitions.hpp
         include/basecfd/element.hpp
         include/basecfd/filtered_iterator.hpp

@@ -22,8 +22,8 @@ class VtkLegacyFormater : public Formater
 {
 public:
     VtkLegacyFormater();
-    virtual Grid* load(const std::string& file, int flags);
-    virtual void save(const Grid& grid, const std::string& file, int flags);
+    virtual Grid* load(const std::string& file, int flags) BASECFD_OVERRIDE;
+    virtual void save(const Grid& grid, const std::string& file, int flags) BASECFD_OVERRIDE;
 
     ElementType getNativeType(int vtkType) const;
 

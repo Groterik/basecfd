@@ -8,9 +8,9 @@ namespace basecfd
 
 template <class TIterator, class TUnaryPredicate>
 class FilteredIterator
-    : std::iterator<typename std::bidirectional_iterator_tag, typename TIterator::value_type>
+    : public std::iterator<typename std::forward_iterator_tag, typename TIterator::value_type>
 {
-    typedef std::iterator<typename std::bidirectional_iterator_tag, typename TIterator::value_type> Iterator;
+    typedef std::iterator<typename std::forward_iterator_tag, typename TIterator::value_type> Iterator;
 public:
     typedef TUnaryPredicate UnaryPredicate;
     typedef TIterator IteratorType;

@@ -16,11 +16,6 @@ void Grid::init()
     checkConsistency();
 }
 
-void Grid::checkConsistency()
-{
-    // TODO
-}
-
 GridInfo Grid::calculateInfo()
 {
 

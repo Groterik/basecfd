@@ -93,9 +93,14 @@ idx_t UnstructuredGrid::neig(idx_t pos, dim_t n) const
     return in;
 }
 
-dim_t UnstructuredGrid::nf() const
+dim_t UnstructuredGrid::nfc() const
 {
     return nComponents;
+}
+
+void UnstructuredGrid::checkConsistency() const
+{
+    csr->checkConsistency();
 }
 
 UnstructuredGrid::~UnstructuredGrid()

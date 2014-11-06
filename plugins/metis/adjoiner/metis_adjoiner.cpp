@@ -11,7 +11,7 @@
 class MetisAdjoiner : public basecfd::Adjoiner
 {
 public:
-    virtual void join(const basecfd::Adjacency& adj, size_t p, size_t common, basecfd::Adjacency& out);
+    virtual void join(const basecfd::Adjacency& adj, size_t p, size_t common, basecfd::Adjacency& out) BASECFD_OVERRIDE;
 };
 
 

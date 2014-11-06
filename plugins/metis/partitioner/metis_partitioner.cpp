@@ -10,7 +10,8 @@
 class MetisPartitioner : public basecfd::Partitioner
 {
 public:
-    virtual void partition(const basecfd::Adjacency& adj, size_t p, size_t common, size_t parts, PartitionVec& output, PartitionVec& neigs);
+    virtual void partition(const basecfd::Adjacency& adj, size_t p, size_t common,
+                           size_t parts, PartitionVec& output, PartitionVec& neigs) BASECFD_OVERRIDE;
 };
 
 void MetisPartitioner::partition(const basecfd::Adjacency& adj, size_t p, size_t common, size_t parts, PartitionVec& output, PartitionVec& neigs)

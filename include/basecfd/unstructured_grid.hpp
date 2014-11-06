@@ -51,7 +51,9 @@ public:
 
     idx_t neig(idx_t pos, dim_t n) const;
 
-    dim_t nf() const;
+    dim_t nfc() const;
+
+    void checkConsistency() const;
 
     ~UnstructuredGrid();
 
