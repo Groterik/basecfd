@@ -3,6 +3,7 @@
 
 #include <basecfd/definitions.hpp>
 #include <basecfd/vector.hpp>
+#include <basecfd/cell_info.hpp>
 
 namespace basecfd
 {
@@ -14,7 +15,7 @@ public:
     typedef G GridType;
     Vector p(int n) const
     {
-        return m_grid->g(pos, n);
+        return m_grid->p(pos, n);
     }
 
     dim_t np() const
@@ -68,6 +69,11 @@ public:
     Cell next() const
     {
         return Cell(*m_grid, pos + 1);
+    }
+
+    CellInfo info() const
+    {
+        return m_grid->ci(pos);
     }
 
 private:

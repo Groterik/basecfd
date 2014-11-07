@@ -60,7 +60,7 @@ idx_t UnstructuredGrid::nc() const
 
 Vector UnstructuredGrid::p(idx_t pos, int n) const
 {
-    assert(n < np(pos));
+    assert(static_cast<idx_t>(n) < np(pos));
     idx_t ip = csr->cell2points.neig(pos, n);
     return csr->mp[ip];
 }
@@ -98,6 +98,11 @@ dim_t UnstructuredGrid::nfc() const
     return nComponents;
 }
 
+CellInfo UnstructuredGrid::ci(idx_t pos) const
+{
+    return CellInfo();
+}
+
 void UnstructuredGrid::checkConsistency() const
 {
     csr->checkConsistency();
@@ -108,6 +113,55 @@ UnstructuredGrid::~UnstructuredGrid()
     delete csr;
 }
 
+UnstructuredGrid::GridCellRange UnstructuredGrid::range()
+{
+    return make_range(GridCellIterator(*this, 0), GridCellIterator(*this, nc()));
+}
+
+UnstructuredGrid::GridCellConstRange UnstructuredGrid::range() const
+{
+    return make_range(GridCellConstIterator(*this, 0), GridCellConstIterator(*this, nc()));
+}
+
+void UnstructuredGrid::scatter()
+{
+    // TODO
+}
+
+void UnstructuredGrid::replenishBoundary()
+{
+    // TODO
+}
+
+void UnstructuredGrid::supressUseless()
+{
+    // TODO
+}
+
+void UnstructuredGrid::reorderNeighbors()
+{
+    // TODO
+}
+
+void UnstructuredGrid::reorderPoints()
+{
+    // TODO
+}
+
+void UnstructuredGrid::sortCells()
+{
+    // TODO
+}
+
+void UnstructuredGrid::paint()
+{
+    // TODO
+}
+
+void UnstructuredGrid::synchronizeOrder()
+{
+    // TODO
+}
 
 void internal::CsrHolder::makeFromMinimal(const MinimalCsr& minCsr)
 {

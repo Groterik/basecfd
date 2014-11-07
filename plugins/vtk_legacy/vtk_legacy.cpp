@@ -45,21 +45,21 @@ protected:
 
 VtkLegacyFormater::VtkLegacyFormater()
 {
-    ElementType ctypesRaw[] = {WrongElement,    //0
-                               Point,             //1
-                               WrongElement,      //2
-                               Line,              //3
-                               WrongElement,      //4
-                               WrongElement,      //5 TRIANGLE NOT SUPPORTED NOW
-                               WrongElement,      //6
-                               WrongElement,      //7
-                               WrongElement,      //8
-                               Quadr,             //9
-                               WrongElement,      //10 TETRAHEDRON NOT SUPPORTED NOW
-                               WrongElement,      //11
-                               WrongElement,      //12 HEXAHEDRON NOT SUPPORTED NOW
-                               WrongElement,      //13
-                               WrongElement,      //14
+    ElementType ctypesRaw[] = {WRONG_ELEMENT,    //0
+                               POINT,             //1
+                               WRONG_ELEMENT,      //2
+                               LINE,              //3
+                               WRONG_ELEMENT,      //4
+                               WRONG_ELEMENT,      //5 TRIANGLE NOT SUPPORTED NOW
+                               WRONG_ELEMENT,      //6
+                               WRONG_ELEMENT,      //7
+                               WRONG_ELEMENT,      //8
+                               QUADR,             //9
+                               WRONG_ELEMENT,      //10 TETRAHEDRON NOT SUPPORTED NOW
+                               WRONG_ELEMENT,      //11
+                               WRONG_ELEMENT,      //12 HEXAHEDRON NOT SUPPORTED NOW
+                               WRONG_ELEMENT,      //13
+                               WRONG_ELEMENT,      //14
                               };
     typeMappingVtkToNative.assign(ctypesRaw, ctypesRaw + sizeof(ctypesRaw) / sizeof(*ctypesRaw));
     for (size_t i = 0; i < typeMappingVtkToNative.size(); ++i)
@@ -249,17 +249,17 @@ void VtkLegacyFormater::extractMinimalCsr(MinimalCsr& csr, std::istream& is, int
     {
         throw std::domain_error("Error: bad cell number in CELL_TYPES");
     }
-    std::vector<ElementType> types(nc, WrongElement);
+    std::vector<ElementType> types(nc, WRONG_ELEMENT);
     for (size_t c = 0; c < nc; ++c)
     {
         size_t typeInt;
         is >> typeInt;
-        ElementType type = WrongElement;
+        ElementType type = WRONG_ELEMENT;
         if (typeInt < typeMappingVtkToNative.size())
         {
             type = typeMappingVtkToNative[typeInt];
         }
-        if (type == WrongElement)
+        if (type == WRONG_ELEMENT)
         {
             throw std::domain_error("Error: cell type is wrong or unsupported");
         }

@@ -6,6 +6,8 @@
 #include <basecfd/vector.hpp>
 #include <basecfd/element.hpp>
 #include <basecfd/cell.hpp>
+#include <basecfd/cell_info.hpp>
+#include <basecfd/cell_iterator.hpp>
 
 #include <cassert>
 #include <vector>
@@ -29,9 +31,9 @@ class CsrHolder;
 } // namespace internal
 
 class UnstructuredGrid
+        : public CellIterable<UnstructuredGrid>
 {
 public:
-    typedef Cell<UnstructuredGrid> GridCell;
 
     explicit UnstructuredGrid(const MinimalCsr& minCsr);
 
@@ -53,9 +55,23 @@ public:
 
     dim_t nfc() const;
 
+    CellInfo ci(idx_t pos) const;
+
     void checkConsistency() const;
 
     ~UnstructuredGrid();
+
+    GridCellRange range();
+    GridCellConstRange range() const;
+
+    void scatter();
+    void replenishBoundary();
+    void supressUseless();
+    void reorderNeighbors();
+    void reorderPoints();
+    void sortCells();
+    void paint();
+    void synchronizeOrder();
 
 private:
     internal::CsrHolder* csr;

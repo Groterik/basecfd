@@ -21,7 +21,7 @@ if(CMAKE_COMPILER_IS_GNUCC)
     endif()
 endif()
 
-list(APPEND CMAKE_CXX_FLAGS ${CXX11_FLAG})
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CXX11_FLAG}")
 
 if(${UPROJECT}_AS_SHARED)
   set(LIB_TYPE SHARED)
@@ -51,6 +51,7 @@ set(PUBLIC_HEADERS
         include/basecfd/adjoiner.hpp
         include/basecfd/algorithm.hpp
         include/basecfd/cell.hpp
+        include/basecfd/cell_info.hpp
         include/basecfd/cell_iterator.hpp
         include/basecfd/definitions.hpp
         include/basecfd/element.hpp

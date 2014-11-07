@@ -2,20 +2,23 @@
 #define BASECFD_CELL_ITERATOR_GUARD_H
 
 #include <basecfd/definitions.hpp>
+#include <basecfd/cell.hpp>
+#include <basecfd/range.hpp>
 
 #include <cassert>
+#include <type_traits>
 #include <iterator>
 
 namespace basecfd
 {
 
-template <class TGrid>
+template <class T>
 class CellIterator
-    : public std::iterator<typename std::forward_iterator_tag, typename TGrid::CellType>
+    : public std::iterator<typename std::forward_iterator_tag, T>
 {
-    typedef std::iterator<typename std::forward_iterator_tag, typename TGrid::CellType> Iterator;
+    typedef std::iterator<typename std::forward_iterator_tag, T> Iterator;
 public:
-    typedef TGrid GridType;
+    typedef typename T::GridType GridType;
     typedef typename Iterator::difference_type difference_type;
     typedef typename Iterator::iterator_category iterator_category;
     typedef typename Iterator::pointer pointer;
@@ -72,6 +75,24 @@ private:
     value_type cell;
 };
 
+template <class T>
+CellIterator<typename T::GridCell> make_cell_iterator(T& gr, idx_t pos)
+{
+    return CellIterator<typename T::GridCell>(gr, pos);
+}
+
+template <class TGrid>
+class CellIterable
+{
+public:
+    typedef TGrid GridType;
+    typedef Cell<GridType> GridCell;
+    typedef Cell<const GridType> GridConstCell;
+    typedef CellIterator<GridCell> GridCellIterator;
+    typedef CellIterator<GridConstCell> GridCellConstIterator;
+    typedef Range<GridCellIterator> GridCellRange;
+    typedef Range<GridCellConstIterator> GridCellConstRange;
+};
 
 } // namespace basecfd
 

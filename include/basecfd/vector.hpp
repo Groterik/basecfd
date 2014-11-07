@@ -9,92 +9,95 @@ namespace basecfd
 class Vector
 {
 public:
+    typedef double value_type;
     enum {XDIM = 0, YDIM, ZDIM, MAXDIM};
-    explicit Vector(double X = 0, double Y = 0, double Z = 0)
-    {
-        p[0] = X;
-        p[1] = Y;
-        p[2] = Z;
-    }
-    inline double& operator[](dim_t dim)
+    explicit constexpr Vector(value_type X = 0, value_type Y = 0, value_type Z = 0) : p {X, Y, Z} {}
+
+    value_type& operator[](dim_t dim)
     {
         return p[dim];
     }
-    inline const double& operator[](dim_t dim) const
+    constexpr const value_type& operator[](dim_t dim) const
     {
         return p[dim];
     }
-    inline double& x()
+    inline value_type& x()
     {
         return p[XDIM];
     }
-    inline const double& x() const
+    constexpr const value_type& x() const
     {
         return p[XDIM];
     }
-    inline double& y()
+    inline value_type& y()
     {
         return p[YDIM];
     }
-    const double& y() const
+    constexpr const value_type& y() const
     {
         return p[YDIM];
     }
-    double& z()
+    value_type& z()
     {
         return p[ZDIM];
     }
-    const double& z() const
+    constexpr const value_type& z() const
     {
         return p[ZDIM];
     }
+
 private:
-    double p[MAXDIM];
+    value_type p[MAXDIM];
+
 };
 
-inline bool equal(double a, double b, double maxRelDiff = 1e-2, double maxAbsDiff = 1e-5)
+constexpr Vector EX = Vector(1.0, 0.0, 0.0);
+constexpr Vector EY = Vector(0.0, 1.0, 0.0);
+constexpr Vector EZ = Vector(0.0, 0.0, 1.0);
+
+inline constexpr bool equal(double a, double b, double maxRelDiff = 1e-2, double maxAbsDiff = 1e-5)
 {
     return b == 0 ? fabs(a) <= maxAbsDiff : (fabs((a - b) / b) <= maxRelDiff) || (maxAbsDiff != 0 && fabs(a - b) <= maxAbsDiff);
 }
 
-inline bool equal(const Vector& a, const Vector& b, double maxRelDiff = 1e-2, double maxAbsDiff = 1e-5)
+inline constexpr bool equal(const Vector& a, const Vector& b, double maxRelDiff = 1e-2, double maxAbsDiff = 1e-5)
 {
     return equal(a.x(), b.x(), maxRelDiff, maxAbsDiff)
            && equal(a.y(), b.y(), maxRelDiff, maxAbsDiff)
            && equal(a.z(), b.z(), maxRelDiff, maxAbsDiff);
 }
 
-inline Vector crossProduct(const Vector& a, const Vector& b)
+inline constexpr Vector crossProduct(const Vector& a, const Vector& b)
 {
     return Vector(a.y() * b.z() - a.z() * b.y(), a.z() * b.x() - a.x() * b.z(), a.x() * b.y() - a.y() * b.x());
 }
 
-inline double dotProduct(const Vector& a, const Vector& b)
+inline constexpr double dotProduct(const Vector& a, const Vector& b)
 {
     return a.x() * b.x() + a.y() * b.y() + a.z() * b.z();
 }
 
-inline double tripleProduct(const Vector& a, const Vector& b, const Vector& c)
+inline constexpr double tripleProduct(const Vector& a, const Vector& b, const Vector& c)
 {
     return dotProduct(crossProduct(a, b), c);
 }
 
-inline Vector operator-(const Vector& a, const Vector& b)
+inline constexpr Vector operator-(const Vector& a, const Vector& b)
 {
     return Vector(a.x() - b.x(), a.y() - b.y(), a.z() - b.z());
 }
 
-inline Vector operator+(const Vector& a, const Vector& b)
+inline constexpr Vector operator+(const Vector& a, const Vector& b)
 {
     return Vector(a.x() + b.x(), a.y() + b.y(), a.z() + b.z());
 }
 
-inline Vector operator/(const Vector& a, double d)
+inline constexpr Vector operator/(const Vector& a, double d)
 {
     return Vector(a.x() / d, a.y() / d, a.z() / d);
 }
 
-inline Vector operator*(const Vector& a, double m)
+inline constexpr Vector operator*(const Vector& a, double m)
 {
     return Vector(a.x() * m, a.y() * m, a.z() * m);
 }
@@ -134,7 +137,7 @@ inline void trim(Vector& v, dim_t dim)
     }
 }
 
-inline double length(const Vector& v)
+inline constexpr double length(const Vector& v)
 {
     return sqrt(dotProduct(v, v));
 }

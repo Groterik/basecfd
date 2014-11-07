@@ -22,6 +22,12 @@ Range<FilteredIterator<typename TRange::IteratorType, TUnaryPredicate> > filter(
                       make_filtered_iterator(pred, range.end(), range.end()));
 }
 
+template <class TRange, class TUnaryPredicate>
+TUnaryPredicate for_each(const TRange& range, TUnaryPredicate pred)
+{
+    return std::for_each(range.begin(), range.end(), pred);
+}
+
 
 } // namespace basecfd
 

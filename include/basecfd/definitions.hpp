@@ -78,6 +78,7 @@ namespace basecfd
 
 typedef uint32_t idx_t;
 typedef uint32_t dim_t;
+typedef uint8_t color_t;
 
 /// Invalid index
 const idx_t BAD_IDX = std::numeric_limits<idx_t>::is_signed ?
@@ -86,6 +87,9 @@ const idx_t BAD_IDX = std::numeric_limits<idx_t>::is_signed ?
 /// Invalid dimension
 const dim_t BAD_DIM = std::numeric_limits<dim_t>::is_signed ?
                       std::numeric_limits<dim_t>::min() : std::numeric_limits<dim_t>::max();
+
+const color_t BAD_COLOR = std::numeric_limits<color_t>::is_signed ?
+            std::numeric_limits<color_t>::min() : std::numeric_limits<color_t>::max();
 
 } //namespace basecfd
 

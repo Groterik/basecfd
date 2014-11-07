@@ -7,7 +7,7 @@ namespace basecfd
 /// Element types enumeration
 enum ElementType
 {
-    WrongElement = 0, Point = 1, Line, Quadr, ElementsCount
+    WRONG_ELEMENT = 0, POINT = 1, LINE, QUADR, ELEMENT_TYPE_COUNT
 };
 
 } // namespace basecfd
